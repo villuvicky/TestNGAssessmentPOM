@@ -12,11 +12,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CommonActions{
@@ -55,7 +58,22 @@ public class CommonActions{
 		driver.switchTo().window(windows.get(index));
 		driver.manage().window().maximize();
 	}
+	public static void closeOtherWindowsMethod(ChromeDriver driver) {
 
+
+		Set<String> allNewWindows=driver.getWindowHandles();
+		String currentWindow= driver.getWindowHandle();
+		
+		for (String string : allNewWindows) {
+			if(!(string.equals(currentWindow))) {
+				
+				driver.switchTo().window(string);
+				driver.close();
+			}
+		}
+		driver.switchTo().window(currentWindow);
+	}
+	
 	public static void uploadFileRobot(String fileLocation) throws AWTException, InterruptedException {
 
 		Robot rb = new Robot();
@@ -90,4 +108,43 @@ public class CommonActions{
 		dateToStr = sdf.format(c.getTime());
 		return dateToStr;
 	}
+	
+	public static void selectMethod(WebElement element, String type, String value) {
+		
+		Select select =  new Select(element);
+		
+		switch (type.toLowerCase()) {
+		case "text":
+			select.selectByVisibleText(value);
+			break;
+		case "index":
+			select.selectByIndex(Integer.parseInt(value));
+			break;
+		case "value":
+			select.selectByValue(value);
+			break;
+
+		default:
+			System.out.println("Select option is not correct");
+			break;
+		}
+	}
+	
+	public static List<String> getDropDownValues(WebElement element, String type) {
+
+		Select select =  new Select(element);
+		List<WebElement> operatorValues=select.getOptions();
+		List<String> dropdownList= new ArrayList<String>();
+
+		for (WebElement webElement : operatorValues) {
+			dropdownList.add(webElement.getText());
+		}
+
+		System.out.println(type+" values are "+ dropdownList);
+
+		System.out.println(dropdownList.size());
+
+		return dropdownList;
+	}
+
 }

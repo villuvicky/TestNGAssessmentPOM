@@ -1,71 +1,77 @@
 package pages;
 
+import java.util.Properties;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import testCases.BaseClass;
 
-public class NewServiceTerritoryPage extends BaseClass{
+public class NewServiceTerritoryPage{
 
-	public NewServiceTerritoryPage(ChromeDriver driver) {
+	private ChromeDriver driver;
+	private Properties prop;
+	
+	public NewServiceTerritoryPage(ChromeDriver driver, Properties prop) {
 
 		this.driver=driver;
+		this.prop=prop;
 	}
 	
 	public NewServiceTerritoryPage enterTerritoryName(String newTerritoryName) {
 
-		WebElement newTerritoryNameBox= driver.findElement(By.xpath("//span[text()='Name']//parent::label//following::input[1]"));
+		WebElement newTerritoryNameBox= driver.findElement(By.xpath(prop.getProperty("NewServiceTerritoryPage.newTerritoryNameBox")));
 		newTerritoryNameBox.sendKeys(newTerritoryName);
 		return this;
 	} 
 	
 	public NewServiceTerritoryPage enterOperatingHours() {
 
-		WebElement operatingHours= driver.findElement(By.xpath("(//span[text()='Operating Hours']//following::input[1])[2]"));
+		WebElement operatingHours= driver.findElement(By.xpath(prop.getProperty("NewServiceTerritoryPage.operatingHours")));
 		operatingHours.click();
 		return this;
 	} 
 	
 	public NewServiceTerritoryPage activeField() {
 
-		WebElement checkBox=driver.findElement(By.xpath("(//span[text()='Active'])[2]//following::input[@type='checkbox']"));
+		WebElement checkBox=driver.findElement(By.xpath(prop.getProperty("NewServiceTerritoryPage.checkBox")));
 		checkBox.click();
-		WebElement firstOperatingHour= driver.findElement(By.xpath("//span[text()='Operating Hours']//following::ul[@class='lookup__list  visible']/li[1]"));
+		WebElement firstOperatingHour= driver.findElement(By.xpath(prop.getProperty("NewServiceTerritoryPage.firstOperatingHour")));
 		firstOperatingHour.click();
 		return this;
 	} 
 	
 	public NewServiceTerritoryPage enterCityName(String city) {
 
-		WebElement cityBox= driver.findElement(By.xpath("//span[text()='City']//following::input[@placeholder='City']"));
+		WebElement cityBox= driver.findElement(By.xpath(prop.getProperty("NewServiceTerritoryPage.cityBox")));
 		cityBox.sendKeys(city);
 		return this;
 	} 
 	
 	public NewServiceTerritoryPage enterAddress(String address) {
 
-		WebElement addressBox= driver.findElement(By.xpath("//span[text()='Address']//following::textarea[1]"));
+		WebElement addressBox= driver.findElement(By.xpath(prop.getProperty("NewServiceTerritoryPage.addressBox")));
 		addressBox.sendKeys(address);
 		return this;
 	} 
 	
 	public NewServiceTerritoryPage enterCountry(String country) {
 
-		WebElement countryBox=driver.findElement(By.xpath("//span[text()='Country']//following::input[@placeholder='Country']"));
+		WebElement countryBox=driver.findElement(By.xpath(prop.getProperty("NewServiceTerritoryPage.countryBox")));
 		countryBox.sendKeys(country);
 		return this;
 	}
 	
 	public NewServiceTerritoryPage enterPostal(String postalCode) {
 
-		WebElement postalCodeBox= driver.findElement(By.xpath("//span[text()='Zip/Postal Code']//following::input[@placeholder='Zip/Postal Code']"));
+		WebElement postalCodeBox= driver.findElement(By.xpath(prop.getProperty("NewServiceTerritoryPage.postalCodeBox")));
 		postalCodeBox.sendKeys(postalCode);
 		return this;
 	} 
 	
 	public NewServiceTerritoryPage saveTerritory() {
-		WebElement saveButton= driver.findElement(By.xpath("//button[@title='Save']"));
+		WebElement saveButton= driver.findElement(By.xpath(prop.getProperty("NewServiceTerritoryPage.saveButton")));
 		saveButton.click();
 		return this;
 	} 

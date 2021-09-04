@@ -9,16 +9,19 @@ import pages.SalesForceHomePage;
 
 public class ArchitectCertificationsTest extends BaseClass{
 
+	private SalesForceHomePage salesForceHomePage;
+	private MobileAppsPage mobileAppsPage;
+	private AdministratorOverviewPage administratorOverviewPage;
 	@Test
-	public void acrchitectCertifications() throws IOException {
+	public void acrchitectCertifications() throws IOException, InterruptedException {
 
-		SalesForceHomePage salesForceHomePage = new SalesForceHomePage(driver);
+		salesForceHomePage = new SalesForceHomePage(driver, prop);
 		salesForceHomePage.mobilePublisher();
-		
-		MobileAppsPage mobileAppsPage = new MobileAppsPage(driver);
+
+		mobileAppsPage = new MobileAppsPage(driver, prop);
 		mobileAppsPage.resources().salesForceCertification();
-		
-		AdministratorOverviewPage administratorOverviewPage=new AdministratorOverviewPage(driver);
+
+		administratorOverviewPage=new AdministratorOverviewPage(driver, prop);
 		administratorOverviewPage.salesForceArchitect().
 		salesForceArchitectDescription().getSolutionArchitectLogo().
 		geTtechnicalArchitectLogo().listOfCertification();

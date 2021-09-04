@@ -23,13 +23,13 @@ public class CreateserviceTerritoriesTest extends BaseClass{
 	@Test(dataProvider = "fecthData")
 	public void createserviceTerritoriesTest(String newTerritoryName,String city,String address, String country, String postalCode, String expectedMessage) throws InterruptedException {
 		
-		salesForceHomePage= new SalesForceHomePage(driver);
+		salesForceHomePage= new SalesForceHomePage(driver, initProp());
 		salesForceHomePage.toggleButtonClick().viewAllButtonClick().serviceTerritoriesButtonClick();
 		
-		serviceTerritoryHomePage= new ServiceTerritoryHomePage(driver);
+		serviceTerritoryHomePage= new ServiceTerritoryHomePage(driver,initProp());
 		serviceTerritoryHomePage.newTerritoryOption();
 		
-		newServiceTerritoryPage= new NewServiceTerritoryPage(driver);
+		newServiceTerritoryPage= new NewServiceTerritoryPage(driver,initProp());
 		newServiceTerritoryPage.enterTerritoryName(newTerritoryName).enterOperatingHours().activeField().
 		enterCityName(city).enterAddress(address).enterCountry(country).enterPostal(postalCode).saveTerritory();
 		

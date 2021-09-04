@@ -32,28 +32,28 @@ public class AssessmentPOM extends BaseClass{
 	@Test(dataProvider = "fecthData")
 	public void test(String subject, String name) throws InterruptedException{
 
-		salesForceHomePage = new SalesForceHomePage(driver);
+		salesForceHomePage = new SalesForceHomePage(driver, initProp());
 		salesForceHomePage.clickCommunity();
 
-		appManagerPage = new AppManagerPage(driver);
+		appManagerPage = new AppManagerPage(driver,initProp());
 		appManagerPage.loadElementsNew().getApplicationNames().getDeveloperNames();
 
-		userMenuPage= new UserMenuPage(driver);
+		userMenuPage= new UserMenuPage(driver,initProp());
 		userMenuPage.clickUserMenu().clickClassicView();
 
-		classicPage = new ClassicPage(driver);
+		classicPage = new ClassicPage(driver,initProp());
 		classicPage.clickCreateNew().clickCreateNewEvent();
 
-		createEventPage = new CreateEventPage(driver);
+		createEventPage = new CreateEventPage(driver,initProp());
 		createEventPage.enterSubject(subject).enterStartDate().enterEndDate().
 		clickAddToInvitees();
 
-		addInviteePage= new AddInviteePage(driver);
+		addInviteePage= new AddInviteePage(driver, initProp());
 		addInviteePage.searchInvitee(name).addInvitee();
 
 		createEventPage.clickAttachFile();
 
-		attachFilePage= new AttachFilePage(driver); 
+		attachFilePage= new AttachFilePage(driver,initProp()); 
 		attachFilePage.chooseFile("C:\\Users\\villu\\TestLeaf\\PageObjectTestNg\\src\\test\\resources\\testData\\Sample.pdf").attachFile().uploadFileDone();
 
 		Assert.assertTrue(createEventPage.isFileUploaded("Sample.pdf"));

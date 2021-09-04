@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,40 +16,41 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import testCases.BaseClass;
 
 
-public class NewOpportunityPage extends BaseClass{
+public class NewOpportunityPage{
 
 	WebElement dates;
-	WebElement chooseDate;
+	private Properties prop;
+	private ChromeDriver driver;
 
-	public NewOpportunityPage(ChromeDriver driver) {
+	public NewOpportunityPage(ChromeDriver driver, Properties prop) {
 
 		this.driver=driver;
+		this.prop=prop;
+		
 	}
 
 	public NewOpportunityPage opportunityName(String opportunityName) {
 
-		WebElement newOpportunitiesName = driver.findElement(By.xpath("//input[@name='Name']"));
+		WebElement newOpportunitiesName = driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.newOpportunitiesName")));
 		newOpportunitiesName.sendKeys(opportunityName);
 		System.out.println(newOpportunitiesName.getAttribute("value"));
 		return this;
 	}
 	public NewOpportunityPage selectTodayDate() {
 
-		dates = driver.findElement(By.xpath("//input[@name='CloseDate']"));
+		dates = driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.dates")));
 		dates.click();
 
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("M/d/y");
-
-		chooseDate = driver.findElement(By.xpath("//input[@name='CloseDate']"));
-		chooseDate.sendKeys(sdf.format(date));
+		dates.sendKeys(sdf.format(date));
 
 		return this;
 	}
 
 	public NewOpportunityPage selectTomorrowDate() {
 
-		dates=driver.findElement(By.xpath("//input[@name='CloseDate']"));
+		dates=driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.dates")));
 		dates.clear();
 
 		Date date = new Date();
@@ -65,7 +68,7 @@ public class NewOpportunityPage extends BaseClass{
 
 	public NewOpportunityPage stage(String stageType) {
 
-		WebElement stageDropdown=driver.findElement(By.xpath("//label[text()='Stage']/following::input[1]//parent::div"));
+		WebElement stageDropdown=driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.stageDropdown")));
 		driver.executeScript("arguments[0].click();", stageDropdown);
 
 		WebElement selectStage = driver.findElement(By.xpath(String.format("(//span[@title='%s'])",stageType)));
@@ -75,7 +78,7 @@ public class NewOpportunityPage extends BaseClass{
 	
 	public NewOpportunityPage deliveryStatus(String deliveryStatus) {
 		
-		WebElement statusBox=driver.findElement(By.xpath("(//input[@class='slds-input slds-combobox__input'])[7]//parent::div"));
+		WebElement statusBox=driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.statusBox")));
 		driver.executeScript("arguments[0].click();", statusBox);
 		
 		WebElement deliverStatus=driver.findElement(By.xpath(String.format("(//span[@title='%s'])",deliveryStatus)));
@@ -86,7 +89,7 @@ public class NewOpportunityPage extends BaseClass{
 
 	public NewOpportunityPage description(String descriptionValue ) {
 		
-		WebElement description=driver.findElement(By.xpath("//label[text()='Description']//parent::lightning-textarea/div/textarea"));
+		WebElement description=driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.description")));
 		description.clear();
 		description.sendKeys(descriptionValue);
 		return this;
@@ -94,24 +97,24 @@ public class NewOpportunityPage extends BaseClass{
 	
 	public NewOpportunityPage saveButton() {
 
-		WebElement saveChanges = driver.findElement(By.xpath("//button[@name='SaveEdit']"));
+		WebElement saveChanges = driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.saveChanges")));
 		saveChanges.click();
 		return this;
 	}
 
 	public List<String> mandatoryFieldError() {
 		
-		String opportunityText=driver.findElement(By.xpath("(//input[@name='Name']/following::div)[1]")).getText();
+		String opportunityText=driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.opportunityText"))).getText();
 		
-		String stageText=driver.findElement(By.xpath("(//label[text()='Stage']/following::div)[6]")).getText();
+		String stageText=driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.stageText"))).getText();
 		
 		System.out.println(opportunityText);
 		
 		System.out.println(stageText);
 		
-		String warningText=driver.findElement(By.xpath("//h2[@title='We hit a snag.']")).getText();
+		String warningText=driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.warningText"))).getText();
 		
-		List<WebElement> allMessagesPath=driver.findElements(By.xpath("//li[@force-recordediterror_recordediterror]/a"));
+		List<WebElement> allMessagesPath=driver.findElements(By.xpath(prop.getProperty("NewOpportunityPage.allMessagesPath")));
 		
 		List<String> actualMessages= new ArrayList<String>();
 		
@@ -122,7 +125,7 @@ public class NewOpportunityPage extends BaseClass{
 			actualMessages.add(MessagePath.getText());
 		}
 
-		WebElement cancel=driver.findElement(By.xpath("//button[@name='CancelEdit']"));
+		WebElement cancel=driver.findElement(By.xpath(prop.getProperty("NewOpportunityPage.cancel")));
 		cancel.click();
 		
 		return actualMessages;

@@ -10,6 +10,10 @@ import pages.SalesHomePage;
 
 public class EditOpportunityTest extends BaseClass{
 
+	private SalesForceHomePage salesForceHomePage;
+	private SalesHomePage salesHomePage;
+	private NewOpportunityPage newOpportunityPage;
+
 	@BeforeClass(alwaysRun = true)
 	public void setSheetName() {
 
@@ -18,21 +22,20 @@ public class EditOpportunityTest extends BaseClass{
 
 	@Test(dataProvider = "fecthData")
 	public  void editOpportunityTest(String opportunityName,String stageType, String deliveryStatus, String descriptionValue) throws InterruptedException  {
-		
-		
-		SalesForceHomePage salesForceHomePage = new SalesForceHomePage(driver);
+
+
+		salesForceHomePage = new SalesForceHomePage(driver, initProp());
 		salesForceHomePage.toggleButtonClick().
-		viewAllButtonClick().
-		salesButtonClick();
-		
-		SalesHomePage salesHomePage = new SalesHomePage(driver);
+		viewAllButtonClick().salesButtonClick();
+
+		salesHomePage = new SalesHomePage(driver, initProp());
 		salesHomePage.opportunityTab().searchOpportunity(opportunityName).opportunityDropDown(opportunityName).OpenExistingOpportunity();
-	
-		NewOpportunityPage newOpportunityPage = new NewOpportunityPage(driver);
+
+		newOpportunityPage = new NewOpportunityPage(driver,initProp());
 		newOpportunityPage.selectTomorrowDate().stage(stageType).deliveryStatus(deliveryStatus).description(descriptionValue).saveButton();
-		
+
 		Assert.assertEquals(salesHomePage.editOpportunityMessage(opportunityName, stageType), stageType);
-		
-		
+
+
 	}
 }

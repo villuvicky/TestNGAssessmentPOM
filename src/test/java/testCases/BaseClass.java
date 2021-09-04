@@ -64,15 +64,18 @@ public class BaseClass {
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 
+		//String propFileLocation="./src/test/resources/configFiles/config.properties";
+
 		driver.get(initProp().getProperty("url"));
 
-		LoginPage lp =new LoginPage(driver);
-		lp.enterUserName(initProp().getProperty("admin")).enterPassword(initProp().getProperty("password")).clickLogin();
+		LoginPage lp =new LoginPage(driver,initProp());
+		
+		lp.enterUserName().enterPassword().clickLogin();
 
 		driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
 
 		By lightningElement= By.xpath("//a[@class='switch-to-lightning']");
-		
+
 		List<WebElement> elements=driver.findElements(lightningElement);
 
 		if(elements.size()>=1) {
@@ -83,21 +86,19 @@ public class BaseClass {
 
 	@AfterMethod(alwaysRun = true)
 	public void tearDown() throws InterruptedException {
-		
 
 		driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
 
 		By lightningElement= By.xpath("//a[@class='switch-to-lightning']");
 
 		if(driver.findElements(lightningElement).size()>=1) {
-
+			
 			driver.findElement(lightningElement).click();
 		}
+		UserMenuPage userMenuPage = new UserMenuPage(driver, initProp()); 
+		userMenuPage.clickUserMenu().logOut();
 		
-		  UserMenuPage userMenuPage = new UserMenuPage(driver); 
-		  userMenuPage.clickUserMenu().logOut(); 
-		  driver.quit();
-		 
+		driver.quit();
 
 	}
 

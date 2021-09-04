@@ -17,13 +17,13 @@ public class DeleteOpportunityTest extends BaseClass{
 
 	@Test(dataProvider = "fecthData")
 	public void deleteOpportunityTest(String opportunityName,String deleteMessage ) throws InterruptedException {
-		SalesForceHomePage salesForceHomePage = new SalesForceHomePage(driver);
+		SalesForceHomePage salesForceHomePage = new SalesForceHomePage(driver, initProp());
 		salesForceHomePage.toggleButtonClick().
 		viewAllButtonClick().
 		salesButtonClick();
 		
-		SalesHomePage salesHomePage = new SalesHomePage(driver);
-		salesHomePage.opportunityTab().searchOpportunity(opportunityName).opportunityDropDown(opportunityName).deleteOpportunity();
+		SalesHomePage salesHomePage = new SalesHomePage(driver, initProp());
+		salesHomePage.opportunityTab().searchOpportunity(opportunityName).opportunityDropDown(opportunityName).clickDelete().confirmDelete();
 		
 		Assert.assertEquals(salesHomePage.deleteOpportunityMessage(), deleteMessage);
 	}

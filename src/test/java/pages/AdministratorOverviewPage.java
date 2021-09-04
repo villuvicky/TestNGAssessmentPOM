@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
 import javax.imageio.ImageIO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -18,23 +20,25 @@ public class AdministratorOverviewPage {
 	URL imageURL;
 
 	BufferedImage saveImage;
-	
+
 	private ChromeDriver driver;
+	private Properties prop;
 
-	public AdministratorOverviewPage(ChromeDriver driver){
-
+	public AdministratorOverviewPage(ChromeDriver driver,Properties prop){
+		
 		this.driver=driver;
+		this.prop=prop;
 	}
 	public AdministratorOverviewPage salesForceArchitect() {
 
-		WebElement salesforceArchitect=driver.findElement(By.xpath("//div[text()='Salesforce Architect']"));
+		WebElement salesforceArchitect=driver.findElement(By.xpath(prop.getProperty("AdministratorOverviewPage.salesforceArchitect")));
 		salesforceArchitect.click();
 		return this;
 	}
 
 	public AdministratorOverviewPage salesForceArchitectDescription() {
 
-		String text= driver.findElement(By.xpath("(//h2[normalize-space(text()) = 'Salesforce Architect']//parent::div/child::div)[1]")).getText();
+		String text= driver.findElement(By.xpath(prop.getProperty("AdministratorOverviewPage.salesForceArchitectDescription"))).getText();
 		System.out.println(text);
 		return this;
 	}
@@ -42,7 +46,7 @@ public class AdministratorOverviewPage {
 	public AdministratorOverviewPage geTtechnicalArchitectLogo() throws IOException {
 
 
-		WebElement technicalArchitectLogo = driver.findElement(By.xpath("//img[@src='https://developer.salesforce.com/resources2/certification-site/images/architect-pyramid-1.png']"));
+		WebElement technicalArchitectLogo = driver.findElement(By.xpath(prop.getProperty("AdministratorOverviewPage.technicalArchitectLogo")));
 
 		logoSRC = technicalArchitectLogo.getAttribute("src");
 
@@ -57,7 +61,7 @@ public class AdministratorOverviewPage {
 
 	public AdministratorOverviewPage getSolutionArchitectLogo() throws IOException {
 
-		WebElement solutionArchitectLogo =   driver.findElement(By.xpath("//img[@src='https://developer.salesforce.com/resources2/certification-site/images/architect-pyramid-2.png']"));
+		WebElement solutionArchitectLogo =   driver.findElement(By.xpath(prop.getProperty("AdministratorOverviewPage.solutionArchitectLogo")));
 
 		logoSRC = solutionArchitectLogo.getAttribute("src");
 
@@ -69,10 +73,10 @@ public class AdministratorOverviewPage {
 
 		return this;
 	}
-	
+
 	public AdministratorOverviewPage listOfCertification() {
-		
-		List<WebElement> certificateElements= driver.findElements(By.xpath("//div[text()='Certification']//ancestor::div[@class='cs-card tile']//div[3]/a"));
+
+		List<WebElement> certificateElements= driver.findElements(By.xpath(prop.getProperty("AdministratorOverviewPage.certificateElements")));
 
 		List<String> certificates= new ArrayList<String>();
 

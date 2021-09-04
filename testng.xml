@@ -7,7 +7,7 @@
 	</listeners>
 	<test thread-count="5" name="Test" parallel='classes'>
 		<classes>
-			<class name="testCases.AssessmentPOM" />
+			<class name="testCases.CreateserviceTerritoriesTest" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

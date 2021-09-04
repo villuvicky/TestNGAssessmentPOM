@@ -6,14 +6,14 @@
   </listeners>
   <test thread-count="5" parallel="classes" name="Test(failed)">
     <classes>
-      <class name="testCases.AssessmentPOM">
+      <class name="testCases.CreateNewOpportunityWithoutMandatoryFieldsTest">
         <methods>
-          <include name="setSheetName"/>
-          <include name="test" invocation-numbers="0 0"/>
+          <include name="createNewOpportunityWithoutMandatoryFieldsTest" invocation-numbers="0 0"/>
           <include name="openBrowserAndLogin"/>
           <include name="tearDown"/>
+          <include name="setSheetName"/>
         </methods>
-      </class> <!-- testCases.AssessmentPOM -->
+      </class> <!-- testCases.CreateNewOpportunityWithoutMandatoryFieldsTest -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

@@ -28,13 +28,13 @@ public class CreateNewOpportunityWithoutMandatoryFieldsTest extends BaseClass{
 		expectedMessages.add(message2);
 		expectedMessages.add(message3);
 		
-		SalesForceHomePage salesForceHomePage = new SalesForceHomePage(driver);
+		SalesForceHomePage salesForceHomePage = new SalesForceHomePage(driver, initProp());
 		salesForceHomePage.toggleButtonClick().viewAllButtonClick().salesButtonClick();
 		
-		SalesHomePage salesHomePage = new SalesHomePage(driver);
+		SalesHomePage salesHomePage = new SalesHomePage(driver,initProp());
 		salesHomePage.opportunityTab().newOpportunityButton();
 		
-		NewOpportunityPage newOpportunityPage = new NewOpportunityPage(driver);
+		NewOpportunityPage newOpportunityPage = new NewOpportunityPage(driver,initProp());
 		newOpportunityPage.selectTodayDate().saveButton();
 		
 		Assert.assertEquals(newOpportunityPage.mandatoryFieldError(), expectedMessages);

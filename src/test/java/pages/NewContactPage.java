@@ -1,49 +1,52 @@
 package pages;
 
+import java.util.Properties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import testCases.BaseClass;
 
-public class NewContactPage extends BaseClass{
+public class NewContactPage{
 
-
-	public NewContactPage(ChromeDriver driver) {
+	private ChromeDriver driver;
+	private Properties prop;
+	public NewContactPage(ChromeDriver driver, Properties prop) {
 
 		this.driver=driver;
+		this.prop=prop;
 	}
 
 	public NewContactPage salutation(String salutationValue) {
 
-		WebElement salutationDropdown=driver.findElement(By.xpath("//span[text()='Salutation']//following::a[@class='select']"));
+		WebElement salutationDropdown=driver.findElement(By.xpath(prop.getProperty("NewContactPage.salutationDropdown")));
 		salutationDropdown.click();
 
 		WebElement salutation=driver.findElement(By.xpath(String.format("//span[text()='Salutation']//following::a[@title='%s']",salutationValue)));
 		salutation.click();
 		return this;
 	}
-	
+
 	public NewContactPage firstName(String contactFirstName) {
 
-		WebElement firstName=driver.findElement(By.xpath("//span[text()='First Name']//following::input[@placeholder='First Name']"));
+		WebElement firstName=driver.findElement(By.xpath(prop.getProperty("NewContactPage.firstName")));
 		firstName.sendKeys(contactFirstName);
 		return this;
 	}
-	
+
 	public NewContactPage lastName(String contactLastName) {
 
-		WebElement lastName=driver.findElement(By.xpath("//span[text()='First Name']//following::input[@placeholder='Last Name']"));
+		WebElement lastName=driver.findElement(By.xpath(prop.getProperty("NewContactPage.lastName")));
 		lastName.sendKeys(contactLastName);
 		return this;
 	}
-	
-	public NewContactPage saveNewContact() {
 
-		WebElement saveButon= driver.findElement(By.xpath("//h2[text()='New Contact']//following::span[text()='Save'][2]"));
+	public NewContactPage saveNewContact() throws InterruptedException {
+
+		WebElement saveButon= driver.findElement(By.xpath(prop.getProperty("NewContactPage.saveButon")));
 		saveButon.click();
+		Thread.sleep(3000);
 		return this;
 	}
-	
-	
+
+
 }

@@ -1,5 +1,6 @@
 package pages;
 
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -8,32 +9,34 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import utilities.CommonActions;
 
 public class UserMenuPage{
+	
 	private ChromeDriver driver;
+	private Properties prop;
 
+	public UserMenuPage(ChromeDriver driver,Properties prop){
 
-	public UserMenuPage(ChromeDriver driver) {
-		this.driver= driver;
+		this.driver=driver;
+		this.prop=prop;
 	}
 
 	public UserMenuPage clickUserMenu() {
 
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		WebElement userMenuIcon=driver.findElement(By.xpath(
-				"(//img[@title='User']//parent::span[@class='uiImage'])[1]"));
+		WebElement userMenuIcon=driver.findElement(By.xpath(prop.getProperty("UserMenuPage.userMenuIcon")));
 		CommonActions.waitClickMethod(driver, userMenuIcon);
 		return this;
 	}
 
 	public ClassicPage clickClassicView() {
 
-		WebElement classicView= driver.findElement(By.xpath("//a[text()='Switch to Salesforce Classic']"));
+		WebElement classicView= driver.findElement(By.xpath(prop.getProperty("UserMenuPage.classicView")));
 		CommonActions.waitClickMethod(driver, classicView);
-		return new ClassicPage(driver);
+		return new ClassicPage(driver, prop);
 	}
 
 	public UserMenuPage logOut() {
 
-		WebElement logOut=driver.findElement(By.xpath("//a[text()='Log Out']"));
+		WebElement logOut=driver.findElement(By.xpath(prop.getProperty("UserMenuPage.logOut")));
 		CommonActions.waitClickMethod(driver, logOut);
 		return this;
 	}

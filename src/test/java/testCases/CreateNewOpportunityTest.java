@@ -9,27 +9,31 @@ import pages.SalesHomePage;
 
 
 public class CreateNewOpportunityTest extends BaseClass{
-	
+
+	private SalesForceHomePage salesForceHomePage;
+	private SalesHomePage salesHomePage;
+	private NewOpportunityPage newOpportunityPage;
+
 	@BeforeClass(groups = { "Opportunity"})
 	public void setSheetName() {
-		
+
 		sheetName="CreateNewOpportunity";
 	}
-	
+
 	@Test(dataProvider = "fecthData",groups = { "Opportunity"})
 	public void createNewOpportunityTest(String opportunityName, String stageType, String successMessage) {
-		
-		SalesForceHomePage salesForceHomePage = new SalesForceHomePage(driver);
+
+		salesForceHomePage = new SalesForceHomePage(driver, initProp());
 		salesForceHomePage.toggleButtonClick().viewAllButtonClick().salesButtonClick();
-		
-		SalesHomePage salesHomePage = new SalesHomePage(driver);
+
+		salesHomePage = new SalesHomePage(driver,initProp());
 		salesHomePage.opportunityTab().newOpportunityButton();
-		
-		NewOpportunityPage newOpportunityPage = new NewOpportunityPage(driver);
+
+		newOpportunityPage = new NewOpportunityPage(driver,initProp());
 		newOpportunityPage.opportunityName(opportunityName).selectTodayDate().stage(stageType).saveButton();
-		
+
 		Assert.assertEquals(salesHomePage.opportunityCreatedMessage(), successMessage);
-		
+
 	}
 
 }

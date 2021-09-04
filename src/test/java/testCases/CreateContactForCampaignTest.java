@@ -3,16 +3,15 @@ package testCases;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import pages.CampaignsHomePage;
 import pages.CampaignsPage;
 import pages.NewContactPage;
 import pages.SalesForceHomePage;
+import pages.SalesHomePage;
 
 public class CreateContactForCampaignTest extends BaseClass{
 	
 	private SalesForceHomePage salesForceHomePage;
-	private CampaignsHomePage campaignsHomePage;
+	private SalesHomePage salesHomePage;
 	private CampaignsPage campaignsPage;
 	private NewContactPage newContactPage;
 	
@@ -25,16 +24,16 @@ public class CreateContactForCampaignTest extends BaseClass{
 	@Test(dataProvider = "fecthData")
 	public void createContactForCampaignTest(String campaign,String salutationValue, String contactFirstName, String contactLastName,String fullName) throws InterruptedException {
 
-		salesForceHomePage = new SalesForceHomePage(driver);
+		salesForceHomePage = new SalesForceHomePage(driver, initProp());
 		salesForceHomePage.toggleButtonClick().viewAllButtonClick().compaignButtonClick();
 		
-		campaignsHomePage= new CampaignsHomePage(driver);
-		campaignsHomePage.searchCampaign(campaign).openCampaign(campaign);
+		salesHomePage= new SalesHomePage(driver, initProp());
+		salesHomePage.searchCampaign(campaign).openCampaign(campaign);
 		
-		campaignsPage = new CampaignsPage(driver);
+		campaignsPage = new CampaignsPage(driver, initProp());
 		campaignsPage.newContact();
 		
-		newContactPage = new NewContactPage(driver);
+		newContactPage = new NewContactPage(driver, initProp());
 		newContactPage.salutation(salutationValue).firstName(contactFirstName).lastName(contactLastName).saveNewContact();
 		
 		campaignsPage.campaignMembers().addContactForCampaignOption().addContactForCampaign(fullName);
